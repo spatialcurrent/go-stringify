@@ -5,6 +5,7 @@
 //
 // =================================================================
 
+// Package stringify contains the StringifyMapKeys function.
 package stringify
 
 import (

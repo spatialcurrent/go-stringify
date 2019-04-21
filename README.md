@@ -21,6 +21,10 @@ import (
 
 See [stringify](https://godoc.org/github.com/spatialcurrent/go-stringify) in GoDoc for information on how to use Go API.
 
+# Testing
+
+Run test using `bash scripts/test.sh`, which runs unit tests, `go vet`, `go vet with shadow`, [errcheck](https://github.com/kisielk/errcheck), [ineffassign](https://github.com/gordonklaus/ineffassign), [staticcheck](https://staticcheck.io/), and [misspell](https://github.com/client9/misspell).
+
 # Contributing
 
 [Spatial Current, Inc.](https://spatialcurrent.io) is currently accepting pull requests for this repository.  We'd love to have your contributions!  Please see [Contributing.md](https://github.com/spatialcurrent/go-stringify/blob/master/CONTRIBUTING.md) for how to get started.
