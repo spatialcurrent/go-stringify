@@ -2,14 +2,14 @@ version: 2.1
 executors:
   base:
     docker:
-      - image: circleci/golang:1.11
+      - image: circleci/golang:1.12.5
     working_directory: /go/src/github.com/spatialcurrent/go-stringify
 jobs:
   pre_deps_golang:
     executor: base
     steps:
       - checkout
-      - run: go get -d ./...
+      - run: make deps
       - run: sudo chown -R circleci /go/src
       - save_cache:
           key: v1-go-src-{{ .Branch }}-{{ .Revision }}
@@ -60,42 +60,6 @@ jobs:
       - run: go get github.com/spatialcurrent/go-header/...
       - run: go install github.com/spatialcurrent/go-header/cmd/goheader
       - run: goheader fix --fix-year 2019 --exit-code-on-changes 1 --verbose
-  build_cli:
-    executor: base
-    steps:
-      - run: sudo chown -R circleci /go/src
-      - restore_cache:
-          keys:
-            - v1-go-src-{{ .Branch }}-{{ .Revision }}
-      - run: bash scripts/build_cli.sh
-      - store_artifacts:
-          path: bin
-          destination: /
-  build_javascript:
-    executor: base
-    steps:
-      - run: sudo chown -R circleci /go/src
-      - restore_cache:
-          keys:
-            - v1-go-src-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Install GopherJS
-          command: go get -u github.com/gopherjs/gopherjs
-      - run: bash scripts/build_javascript.sh
-      - store_artifacts:
-          path: bin
-          destination: /
-  build_so:
-    executor: base
-    steps:
-      - run: sudo chown -R circleci /go/src
-      - restore_cache:
-          keys:
-            - v1-go-src-{{ .Branch }}-{{ .Revision }}
-      - run: bash scripts/build_so.sh
-      - store_artifacts:
-          path: bin
-          destination: /
 workflows:
   main:
     jobs:
