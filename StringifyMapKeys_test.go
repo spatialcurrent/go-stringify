@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func TestStringify(t *testing.T) {
+func TestStringifyMapKeys(t *testing.T) {
 
 	testCases := []struct {
 		Input  interface{}
