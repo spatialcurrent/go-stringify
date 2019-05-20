@@ -4,7 +4,7 @@
 
 # Description
 
-**go-stringify** is a simple library for stringifying map keys in Go objects.
+**go-stringify** is a simple library that contains a few functions to stringify objects, including map keys and slices.
 
 # Usage
 
@@ -14,7 +14,7 @@ You can import **go-stringify** as a library with:
 
 ```go
 import (
-  stringify "github.com/spatialcurrent/go-stringify"
+  stringify "github.com/spatialcurrent/go-stringify/pkg/stringify"
 )
 ...
 ```

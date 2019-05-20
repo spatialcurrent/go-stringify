@@ -5,5 +5,5 @@
 //
 // =================================================================
 
-// Package stringify contains functions to stringify map keys and stringify slice elements.
+// Package stringify contains multiple functions to convert various objects to strings.
 package stringify

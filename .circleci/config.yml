@@ -2,7 +2,7 @@ version: 2.1
 executors:
   base:
     docker:
-      - image: circleci/golang:1.12.5
+      - image: circleci/golang:1.12
     working_directory: /go/src/github.com/spatialcurrent/go-stringify
 jobs:
   pre_deps_golang:
@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Download and install staticheck
           command: go get -u honnef.co/go/tools/cmd/staticcheck
-      - run: bash scripts/test.sh
+      - run: make test
   validate:
     executor: base
     steps:
