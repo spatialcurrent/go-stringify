@@ -8,31 +8,33 @@
 package stringify
 
 import (
-	"reflect"
 	"testing"
+)
+
+import (
+	"github.com/stretchr/testify/assert"
 )
 
 func TestStringifyMapKeys(t *testing.T) {
 
-	testCases := []struct {
-		Input  interface{}
-		Output interface{}
-	}{
-		struct {
-			Input  interface{}
-			Output interface{}
-		}{
-			Input:  map[interface{}]interface{}{"foo": "bar"},
-			Output: map[string]interface{}{"foo": "bar"},
-		},
-	}
+	in := map[interface{}]interface{}{"a": "x", "b": "y", "c": "z"}
+	expected := map[string]interface{}{"a": "x", "b": "y", "c": "z"}
 
-	for _, testCase := range testCases {
+	stringer := NewStringer("", false, false, false)
+	got, err := StringifyMapKeys(in, stringer)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, got)
 
-		got := StringifyMapKeys(testCase.Input)
-		if !reflect.DeepEqual(got, testCase.Output) {
-			t.Errorf("StringifyMapKeys(%v) == %v (%v), want %v (%s)", testCase.Input, got, reflect.TypeOf(got), testCase.Output, reflect.TypeOf(testCase.Output))
-		}
-	}
+}
+
+func TestStringifyMapKeysUpper(t *testing.T) {
+
+	in := map[interface{}]interface{}{"a": "x", "b": "y", "c": "z"}
+	expected := map[string]interface{}{"A": "x", "B": "y", "C": "z"}
+
+	stringer := NewStringer("", false, false, true)
+	got, err := StringifyMapKeys(in, stringer)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, got)
 
 }

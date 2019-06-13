@@ -8,14 +8,10 @@
 package stringify
 
 import (
-	"testing"
+	"fmt"
 )
 
-import (
-	"github.com/stretchr/testify/assert"
-)
-
-func TestDecimalValueStringer(t *testing.T) {
+func ExampleStringer() {
 
 	in := []interface{}{
 		"a",
@@ -26,21 +22,24 @@ func TestDecimalValueStringer(t *testing.T) {
 		nil,
 	}
 
-	out := []string{
-		"a",
-		"1",
-		"1234567890.123000",
-		"true",
-		"false",
-		"-",
-	}
+	nodata := "-"
+	decimal := false
+	lower := false
+	upper := false
+	stringer := NewStringer(nodata, decimal, lower, upper)
 
-	stringer := DecimalValueStringer("-")
-
-	for i, x := range in {
+	for _, x := range in {
 		str, err := stringer(x)
-		assert.Nil(t, err)
-		assert.Equal(t, out[i], str)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(str)
 	}
+	// Output: a
+	// 1
+	// 1.234567890123e+09
+	// true
+	// false
+	// -
 
 }

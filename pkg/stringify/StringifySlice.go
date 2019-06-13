@@ -16,9 +16,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-// StringifySlice converts all the objects in a slice or array to their default string representatoin.
+// StringifySlice converts all the objects in a slice or array to strings using the given stringer.
 // Returns a []string, and error if any.
-func StringifySlice(in interface{}, valueStringer func(object interface{}) (string, error)) ([]string, error) {
+func StringifySlice(in interface{}, stringer Stringer) ([]string, error) {
 	v := reflect.ValueOf(in)
 	k := v.Type().Kind()
 	if k != reflect.Array && k != reflect.Slice {
@@ -26,7 +26,7 @@ func StringifySlice(in interface{}, valueStringer func(object interface{}) (stri
 	}
 	out := make([]string, 0, v.Len())
 	for i := 0; i < v.Len(); i++ {
-		str, err := valueStringer(v.Index(i).Interface())
+		str, err := stringer(v.Index(i).Interface())
 		if err != nil {
 			return out, errors.Wrap(err, fmt.Sprintf("error stringifying element at index %d", i))
 		}

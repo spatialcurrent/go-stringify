@@ -12,6 +12,7 @@ import (
 )
 
 // InterfaceSliceToStringSlice converts a slice of interface{} to a slice of strings using fmt.Sprint.
+// Use StringifySlice for options for stringifying.
 func InterfaceSliceToStringSlice(values []interface{}) []string {
 	stringSlice := make([]string, 0, len(values))
 	for _, v := range values {

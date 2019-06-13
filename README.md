@@ -4,19 +4,25 @@
 
 # Description
 
-**go-stringify** is a simple library that contains a few functions to stringify objects, including map keys and slices.
+**go-stringify** is a simple library for generating a stringer that converts literals to strings, converts map keys to strings, or converts a slice to a slice of strings.  **go-stringify** is used by [go-simple-serializer](http://github.com/spatialcurrent/go-simple-serializer).
 
 # Usage
 
 **Go**
 
-You can import **go-stringify** as a library with:
+You can install **go-stringify** with.
+
+
+```shell
+go get -u -d github.com/spatialcurrent/go-stringify/...
+```
+
+You can import the **stringify** package with:
 
 ```go
 import (
   stringify "github.com/spatialcurrent/go-stringify/pkg/stringify"
 )
-...
 ```
 
 See [stringify](https://godoc.org/github.com/spatialcurrent/go-stringify) in GoDoc for information on how to use Go API.
