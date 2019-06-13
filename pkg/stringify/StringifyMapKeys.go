@@ -8,10 +8,10 @@
 package stringify
 
 import (
-	"fmt"
+	"github.com/pkg/errors"
 )
 
-// StringifyMapKeys recursively converts map keys from interface{} to string.
+// StringifyMapKeys recursively stringifying map keys from interface{} to string.
 // This functionality is inspired by work done in https://github.com/gohugoio/hugo, but
 // support many more types, including:
 //	- []interface{}
@@ -23,64 +23,126 @@ import (
 //	- map[string]map[string][]interface{}
 //	- map[interface{}]struct{}
 // See https://github.com/gohugoio/hugo/pull/4138 for background.
-func StringifyMapKeys(in interface{}) interface{} {
+func StringifyMapKeys(in interface{}, stringer Stringer) (interface{}, error) {
 
 	switch in := in.(type) {
 	case []interface{}:
 		res := make([]interface{}, len(in))
-		for i, v := range in {
-			res[i] = StringifyMapKeys(v)
+		for i, value := range in {
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[i] = newValue
 		}
-		return res
+		return res, nil
 	case [][]interface{}:
 		res := make([][]interface{}, len(in))
-		for i, v := range in {
-			res[i] = StringifyMapKeys(v).([]interface{})
+		for i, value := range in {
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[i] = newValue.([]interface{})
 		}
-		return res
+		return res, nil
 	case []map[interface{}]interface{}:
 		res := make([]map[string]interface{}, len(in))
 		for i, v := range in {
-			res[i] = StringifyMapKeys(v).(map[string]interface{})
+			newValue, err := StringifyMapKeys(v, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[i] = newValue.(map[string]interface{})
 		}
-		return res
+		return res, nil
 	case map[interface{}]interface{}:
 		res := make(map[string]interface{})
-		for k, v := range in {
-			res[fmt.Sprintf("%v", k)] = StringifyMapKeys(v)
+		for key, value := range in {
+			newKey, err := stringer(key)
+			if err != nil {
+				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+			}
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[newKey] = newValue
 		}
-		return res
+		return res, nil
 	case map[string]interface{}:
 		res := make(map[string]interface{})
-		for k, v := range in {
-			res[k] = StringifyMapKeys(v)
+		for key, value := range in {
+			newKey, err := stringer(key)
+			if err != nil {
+				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+			}
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[newKey] = newValue
 		}
-		return res
+		return res, nil
 	case map[string][]interface{}:
 		res := make(map[string][]interface{})
-		for k, v := range in {
-			res[k] = StringifyMapKeys(v).([]interface{})
+		for key, value := range in {
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[key] = newValue.([]interface{})
 		}
-		return res
+		return res, nil
 	case map[string]map[string]interface{}:
 		res := make(map[string]map[string]interface{})
-		for k, v := range in {
-			res[k] = StringifyMapKeys(v).(map[string]interface{})
+		for key, value := range in {
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[key] = newValue.(map[string]interface{})
 		}
-		return res
+		return res, nil
 	case map[string]map[string][]interface{}:
 		res := make(map[string]map[string][]interface{})
-		for k, v := range in {
-			res[k] = StringifyMapKeys(v).(map[string][]interface{})
+		for key, value := range in {
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[key] = newValue.(map[string][]interface{})
 		}
-		return res
+		return res, nil
 	case map[interface{}]struct{}:
 		res := make(map[string]interface{})
-		for k, v := range in {
-			res[fmt.Sprintf("%v", k)] = StringifyMapKeys(v)
+		for key, value := range in {
+			newKey, err := stringer(key)
+			if err != nil {
+				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+			}
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[newKey] = newValue
 		}
-		return res
+		return res, nil
+	case map[string]struct{}:
+		res := make(map[string]struct{})
+		for key, value := range in {
+			newKey, err := stringer(key)
+			if err != nil {
+				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+			}
+			newValue, err := StringifyMapKeys(value, stringer)
+			if err != nil {
+				return in, err
+			}
+			res[newKey] = newValue.(struct{})
+		}
+		return res, nil
 	default:
-		return in
+		return in, nil
 	}
 }

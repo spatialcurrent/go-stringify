@@ -5,5 +5,7 @@
 //
 // =================================================================
 
-// Package stringify contains multiple functions to convert various objects to strings.
+// Package stringify is a simple library for generating a stringer that converts literals to strings, converts map keys to strings, or converts a slice to a slice of strings.  This package is used by go-simple-serializer.
+//
+//  - http://github.com/spatialcurrent/go-simple-serializer
 package stringify
