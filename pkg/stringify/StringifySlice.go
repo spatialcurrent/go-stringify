@@ -12,10 +12,6 @@ import (
 	"reflect"
 )
 
-import (
-	"github.com/pkg/errors"
-)
-
 // StringifySlice converts all the objects in a slice or array to strings using the given stringer.
 // Returns a []string, and error if any.
 func StringifySlice(in interface{}, stringer Stringer) ([]string, error) {
@@ -28,7 +24,7 @@ func StringifySlice(in interface{}, stringer Stringer) ([]string, error) {
 	for i := 0; i < v.Len(); i++ {
 		str, err := stringer(v.Index(i).Interface())
 		if err != nil {
-			return out, errors.Wrap(err, fmt.Sprintf("error stringifying element at index %d", i))
+			return out, fmt.Errorf("error stringifying element at index %d: %w", i, err)
 		}
 		out = append(out, str)
 	}

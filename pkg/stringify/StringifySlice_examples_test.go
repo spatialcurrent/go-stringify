@@ -33,7 +33,7 @@ func ExampleStringifySlice_default() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(fmt.Sprintf("%#v", out))
+	fmt.Printf("%#v\n", out)
 	// Output: []string{"A", "B", "C", "1", "2", "3", "1.234567890123E+09", "TRUE", "FALSE", "-"}
 }
 
@@ -59,6 +59,6 @@ func ExampleStringifySlice_decimal() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(fmt.Sprintf("%#v", out))
+	fmt.Printf("%#v\n", out)
 	// Output: []string{"A", "B", "C", "1", "2", "3", "1234567890.123000", "TRUE", "FALSE", "-"}
 }
