@@ -18,7 +18,7 @@ fmt:  ## Format Go source code
 
 .PHONY: imports
 imports: bin/goimports ## Update imports in Go source code
-	bin/goimports -w -local github.com/spatialcurrent/gocat,github.com/spatialcurrent $$(find . -iname '*.go')
+	bin/goimports -w -local github.com/spatialcurrent/go-stringify,github.com/spatialcurrent $$(find . -iname '*.go')
 
 vet: ## Vet Go source code
 	go vet github.com/spatialcurrent/go-stringify/pkg/... # vet packages

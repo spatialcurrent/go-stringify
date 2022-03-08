@@ -21,7 +21,15 @@ import (
 )
 ```
 
-See [stringify](https://pkg.go.dev/github.com/spatialcurrent/go-stringify/pkg/stringify) in the docs for information on how to use Go API.  See the tests for ways to use this library.
+The easiest pattern is to use the `NewStringer(noDataValue string, decimal bool, lower bool, upper bool)` constructor to create a stringer function.
+
+```go
+stringer := NewStringer("-", true, false, false)
+...
+str := stringer(obj)
+```
+
+See [stringify](https://pkg.go.dev/github.com/spatialcurrent/go-stringify/pkg/stringify) in the docs for information on how to use Go API.
 
 # Testing
 
@@ -29,7 +37,7 @@ To run Go tests using `make test_go` or (`bash scripts/test.sh`), which runs uni
 
 # Contributing
 
-[Spatial Current, Inc.](https://spatialcurrent.io) is currently accepting pull requests for this repository.  We'd love to have your contributions!  Please see [Contributing.md](https://github.com/spatialcurrent/go-try-get/blob/main/CONTRIBUTING.md) for how to get started.
+[Spatial Current, Inc.](https://spatialcurrent.io) is currently accepting pull requests for this repository.  We'd love to have your contributions!  Please see [Contributing.md](https://github.com/spatialcurrent/go-stringify/blob/main/CONTRIBUTING.md) for how to get started.
 
 # License
 
