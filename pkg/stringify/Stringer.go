@@ -95,5 +95,5 @@ func NewDefaultStringer() Stringer {
 
 // NewDecimalStringer returns a new stringer that uses decimal notation.
 func NewDecimalStringer() Stringer {
-	return NewStringer("", false, false, false)
+	return NewStringer("", true, false, false)
 }

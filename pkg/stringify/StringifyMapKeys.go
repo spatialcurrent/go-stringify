@@ -1,6 +1,6 @@
 // =================================================================
 //
-// Copyright (C) 2019 Spatial Current, Inc. - All Rights Reserved
+// Copyright (C) 2022 Spatial Current, Inc. - All Rights Reserved
 // Released as open source under the MIT License.  See LICENSE file.
 //
 // =================================================================
@@ -8,7 +8,7 @@
 package stringify
 
 import (
-	"github.com/pkg/errors"
+	"fmt"
 )
 
 // StringifyMapKeys recursively stringifying map keys from interface{} to string.
@@ -61,7 +61,7 @@ func StringifyMapKeys(in interface{}, stringer Stringer) (interface{}, error) {
 		for key, value := range in {
 			newKey, err := stringer(key)
 			if err != nil {
-				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+				return in, fmt.Errorf("error stringifying map key %q: %w", key, err)
 			}
 			newValue, err := StringifyMapKeys(value, stringer)
 			if err != nil {
@@ -75,7 +75,7 @@ func StringifyMapKeys(in interface{}, stringer Stringer) (interface{}, error) {
 		for key, value := range in {
 			newKey, err := stringer(key)
 			if err != nil {
-				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+				return in, fmt.Errorf("error stringifying map key %q: %w", key, err)
 			}
 			newValue, err := StringifyMapKeys(value, stringer)
 			if err != nil {
@@ -119,7 +119,7 @@ func StringifyMapKeys(in interface{}, stringer Stringer) (interface{}, error) {
 		for key, value := range in {
 			newKey, err := stringer(key)
 			if err != nil {
-				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+				return in, fmt.Errorf("error stringifying map key %q: %w", key, err)
 			}
 			newValue, err := StringifyMapKeys(value, stringer)
 			if err != nil {
@@ -133,7 +133,7 @@ func StringifyMapKeys(in interface{}, stringer Stringer) (interface{}, error) {
 		for key, value := range in {
 			newKey, err := stringer(key)
 			if err != nil {
-				return in, errors.Wrapf(err, "error stringifying map key %q", key)
+				return in, fmt.Errorf("error stringifying map key %q: %w", key, err)
 			}
 			newValue, err := StringifyMapKeys(value, stringer)
 			if err != nil {

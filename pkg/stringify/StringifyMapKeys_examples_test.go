@@ -1,6 +1,6 @@
 // =================================================================
 //
-// Copyright (C) 2019 Spatial Current, Inc. - All Rights Reserved
+// Copyright (C) 2022 Spatial Current, Inc. - All Rights Reserved
 // Released as open source under the MIT License.  See LICENSE file.
 //
 // =================================================================
@@ -24,7 +24,7 @@ func ExampleStringifyMapKeys_default() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(fmt.Sprintf("%#v", out))
+	fmt.Printf("%#v\n", out)
 	// Output: map[string]interface {}{"a":"x", "b":"y", "c":"z"}
 }
 
@@ -41,6 +41,6 @@ func ExampleStringifyMapKeys_upper() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(fmt.Sprintf("%#v", out))
+	fmt.Printf("%#v\n", out)
 	// Output: map[string]interface {}{"A":"x", "B":"y", "C":"z"}
 }
